@@ -4,6 +4,5 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/NewsPaper" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/NewsPaper/news" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/news_portal" vcs="Git" />
   </component>
 </project>
