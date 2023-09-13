@@ -9,6 +9,10 @@ News
 {% block content %}
 <h1>Количество новостей на странице: {{ news|length }}</h1>
 
+    {% if perms.accounts.add_post %}
+    <a href="{% url 'post_create' %}">Добавить новость</a>
+    {% endif %}
+
 <hr>
     {% if news %}
         <table>
@@ -16,6 +20,10 @@ News
                 <td>Заголовок</td>
                 <td>Дата публикации</td>
                 <td>Текст</td>
+                {% if perms.accounts.change_post or perms.accounts.delete_post %}
+                <td>Действия</td>
+                {% endif %}
+
             </tr>
 
             {% for news_detail in news %}
@@ -23,6 +31,15 @@ News
                 <td>{{ news_detail.title|censor }}</td>
                 <td>{{ news_detail.dateCreation|date:'d M Y' }}</td>
                 <td>{{ news_detail.text|truncatewords:20 }}</td>
+
+                <td>
+                    {% if perms.accounts.change_post %}
+                    <a href="{% url 'post_edit' news_detail.id %}">Изменить</a>
+                    {% endif %}
+                    {% if perms.accounts.delete_post %}
+                    <a href="{% url 'post_delete' news_detail.id %}">Удалить</a>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
 
