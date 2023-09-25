@@ -1,0 +1,34 @@
+from django.contrib.auth.models import User
+from django.core.mail import EmailMultiAlternatives
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
+from .models import PostCategory
+
+
+@receiver(m2m_changed, sender=PostCategory)
+def post_created(instance, sender, **kwargs):
+    if kwargs['action'] == 'post_add':
+        subscribers_emails = []
+
+        for category in instance.postCategory.all():
+            subscribers_emails += User.objects.filter(subscriptions__category=category).values_list('email', flat=True)
+
+        subject = f'Новый пост в категории {instance.postCategory}'
+
+        text_content = (
+            f'Статья: {instance.title}\n'
+            f'Текст: {instance.text}\n\n'
+            f'Ссылка на пост: http://127.0.0.1:8000{instance.get_absolute_url()}'
+        )
+
+        html_content = (
+            f'Товар: {instance.title}<br>'
+            f'Цена: {instance.text}<br><br>'
+            f'<a href="http://127.0.0.1{instance.get_absolute_url()}">'
+            f'Ссылка на пост</a>'
+        )
+
+        for email in subscribers_emails:
+            msg = EmailMultiAlternatives(subject, text_content, None, subscribers_emails)
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()

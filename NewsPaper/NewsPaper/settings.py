@@ -153,3 +153,24 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "sergeyskywell"
+EMAIL_HOST_PASSWORD = "tjqhjsldfbghqyia"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = "sergeyskywell@yandex.ru"
+
+SERVER_EMAIL = "sergeyskywell@yandex.ru"
+
+MANAGERS = (
+    ('Sergey', 'quercue@gmail.com'),
+    ('Petr', 'petr@yandex.ru'),
+)
+
+ADMINS = (
+    ('Sergey', 'quercue@gmail.com'),
+)
