@@ -14,3 +14,7 @@ idna~=3.4
 urllib3~=2.0.4
 pycparser~=2.21
 setuptools~=65.5.1
+pytz~=2023.3.post1
+tzlocal~=5.0.1
+six~=1.16.0
+APScheduler~=3.10.4

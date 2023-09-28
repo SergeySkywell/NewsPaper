@@ -1,0 +1,74 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+Новости
+{% endblock title %}
+
+{% block content %}
+<h1>Количество новостей на странице: {{ news|length }}</h1>
+
+    {% if is_not_subscriber %}
+        <p class="text-center"><a href="{}" class="btn btn-secondary btn-sm">Подписаться</a></p>
+    {% endif %}
+
+
+    {% if perms.accounts.add_post %}
+    <a href="{% url 'post_create' %}">Добавить новость</a>
+    {% endif %}
+
+<hr>
+    {% if news %}
+        <table>
+            <tr>
+                <td>Заголовок</td>
+                <td>Дата публикации</td>
+                <td>Текст</td>
+                {% if perms.accounts.change_post or perms.accounts.delete_post %}
+                <td>Действия</td>
+                {% endif %}
+
+            </tr>
+
+            {% for news_detail in news %}
+            <tr>
+                <td>{{ news_detail.title|censor }}</td>
+                <td>{{ news_detail.dateCreation|date:'d M Y' }}</td>
+                <td>{{ news_detail.text|truncatewords:20 }}</td>
+
+                <td>
+                    {% if perms.accounts.change_post %}
+                    <a href="{% url 'post_edit' news_detail.id %}">Изменить</a>
+                    {% endif %}
+                    {% if perms.accounts.delete_post %}
+                    <a href="{% url 'post_delete' news_detail.id %}">Удалить</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    {% else %}
+        <h2>Новостей нет!</h2>
+    {% endif %}
+
+   {% if page_obj.has_previous %}
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {{ page_obj.number }}
+
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+
+{% endblock content %}

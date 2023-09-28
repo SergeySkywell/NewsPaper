@@ -8,7 +8,6 @@ from .models import Post, Subscriber, Category
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.db.models import Exists, OuterRef
-from django.shortcuts import render
 
 
 class NewsList(ListView):

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
+    "django_apscheduler",
 ]
 
 SITE_ID = 1
@@ -174,3 +175,5 @@ MANAGERS = (
 ADMINS = (
     ('Sergey', 'quercue@gmail.com'),
 )
+
+SITE_URL = 'https://127.0.0.1:8000'

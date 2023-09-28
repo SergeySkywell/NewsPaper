@@ -29,6 +29,6 @@ def post_created(instance, sender, **kwargs):
         )
 
         for email in subscribers_emails:
-            msg = EmailMultiAlternatives(subject, text_content, None, subscribers_emails)
+            msg = EmailMultiAlternatives(subject, text_content, None, [email])
             msg.attach_alternative(html_content, "text/html")
             msg.send()
