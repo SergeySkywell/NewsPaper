@@ -1,10 +1,14 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from .filters import PostFilter
 from .forms import PostForm, SignUpForm
 from .models import Post, Subscriber, Category
+from .tasks import hello
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.db.models import Exists, OuterRef
@@ -103,3 +107,9 @@ def subscriptions(request):
         'subscriptions.html',
         {'categories': categories_with_subscriptions},
     )
+
+
+class IndexView(View):
+    def get(self, request):
+        hello.delay()
+        return HttpResponse('Hello!')
