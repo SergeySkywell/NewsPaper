@@ -33,10 +33,10 @@ def post_created(id):
         f'Ссылка на пост</a>'
     )
 
-    msg = EmailMultiAlternatives(subject, text_content, None)
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
-
+    for email in subscribers_emails:
+        msg = EmailMultiAlternatives(subject, text_content, None, [email])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
 
 @shared_task
 def weekly_send_emails():
