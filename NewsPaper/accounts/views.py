@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 from .filters import PostFilter
 from .forms import PostForm, SignUpForm
 from .models import Post, Subscriber, Category
-from .tasks import hello
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.db.models import Exists, OuterRef
@@ -107,9 +106,3 @@ def subscriptions(request):
         'subscriptions.html',
         {'categories': categories_with_subscriptions},
     )
-
-
-class IndexView(View):
-    def get(self, request):
-        hello.delay()
-        return HttpResponse('Hello!')
