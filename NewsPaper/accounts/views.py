@@ -11,6 +11,7 @@ from .models import Post, Subscriber, Category
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.db.models import Exists, OuterRef
+from django.core.cache import cache
 
 
 class NewsList(ListView):
@@ -51,9 +52,17 @@ class SignUp(CreateView):
 
 
 class NewsDetail(DetailView):
-    model = Post
     template_name = 'news_detail.html'
     context_object_name = 'news_detail'
+    queryset = Post.objects.all()
+
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'product-{self.kwargs["pk"]}', None)
+
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'product-{self.kwargs["pk"]}', obj)
+            return obj
 
 
 class PostCreate(PermissionRequiredMixin, CreateView):

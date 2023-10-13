@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.urls import reverse
+from django.core.cache import cache
 
 
 class Author(models.Model):
@@ -20,9 +21,14 @@ class Author(models.Model):
         self.ratingAuthor = pRat * 3 + cRat
         self.save()
 
+    def __str__(self):
+        return f'{self.authorUser}'
 
 class Category(models.Model):
     name = models.CharField(max_length=64, unique=True)
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Post(models.Model):
@@ -40,8 +46,15 @@ class Post(models.Model):
     text = models.TextField()
     rating = models.SmallIntegerField(default=0)
 
+    def __str__(self):
+        return f'{self.title}'
+
     def get_absolute_url(self):
-        return reverse('post_edit', args=[str(self.id)])
+        return f'/products/{self.id}'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete(f'product-{self.pk}')
 
     def like(self):
         self.rating += 1
