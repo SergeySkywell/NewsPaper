@@ -88,6 +88,9 @@ class Comment(models.Model):
         self.rating -= 1
         self.save()
 
+    def __str__(self):
+        return f'{self.text}'
+
 
 class Subscriber(models.Model):
     user = models.ForeignKey(
@@ -100,3 +103,6 @@ class Subscriber(models.Model):
         on_delete=models.CASCADE,
         related_name='subscriptions',
     )
+
+    def __str__(self):
+        return f'{self.user}'
