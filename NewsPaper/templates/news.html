@@ -1,5 +1,7 @@
 {% extends 'flatpages/default.html' %}
 
+{% load i18n %}
+
 {% load custom_filters %}
 
 {% block title %}
@@ -7,7 +9,7 @@ News
 {% endblock title %}
 
 {% block content %}
-<h1>Количество новостей на странице: {{ news|length }}</h1>
+<h1>{% trans "Number of news per page" %}: {{ news|length }}</h1>
 
 {% load cache %}
     {% cache 30 add_news %}

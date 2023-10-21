@@ -12,6 +12,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.db.models import Exists, OuterRef
 from django.core.cache import cache
+from django.utils.translation import gettext
+from django.utils.translation import pgettext_lazy
 
 
 class NewsList(ListView):
