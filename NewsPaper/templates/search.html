@@ -3,7 +3,7 @@
 {% load custom_filters %}
 
 {% block title %}
-Search
+{% trans "Search" %}
 {% endblock title %}
 
 {% block content %}
@@ -17,9 +17,9 @@ Search
     {% if news %}
         <table>
             <tr>
-                <td>Заголовок</td>
-                <td>Дата публикации</td>
-                <td>Текст</td>
+                <td>{% trans "Title" %}</td>
+                <td>{% trans "Publication date" %}</td>
+                <td>{% trans "Text" %}</td>
             </tr>
 
             {% for news_detail in news %}
@@ -32,7 +32,7 @@ Search
 
         </table>
     {% else %}
-        <h2>Новостей нет!</h2>
+        <h2>{% trans "No news" %}</h2>
     {% endif %}
 
    {% if page_obj.has_previous %}

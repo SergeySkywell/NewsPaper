@@ -1,7 +1,7 @@
 {% extends 'flatpages/default.html' %}
 
 {% block title %}
-Subscriptions
+<h2>{% trans "Subscribtions" %}</h2>
 {% endblock title %}
 
 {% block content %}
@@ -12,11 +12,11 @@ Subscriptions
                 {% csrf_token %}
                 <input type="hidden" name="category_id" value="{{ category.id }}" />
                     {% if category.user_subscribed %}
-                        <button disabled>Подписаться</button>
-                        <button name="action" value="unsubscribe">Отписаться</button>
+                        <button disabled><h2>{% trans "Subscribe" %}</h2></button>
+                        <button name="action" value="unsubscribe"><h2>{% trans "Unsubscribe" %}</h2></button>
                     {% else %}
-                        <button name="action" value="subscribe">Подписаться</button>
-                        <button disabled>Отписаться</button>
+                        <button name="action" value="subscribe">{% trans "Subscribe" %}</button>
+                        <button disabled>{% trans "Unsubscribe" %}</button>
                     {% endif %}
             </form>
         </p>

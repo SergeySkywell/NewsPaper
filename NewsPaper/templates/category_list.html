@@ -7,26 +7,26 @@
 {% endblock title %}
 
 {% block content %}
-<h1>Количество новостей на странице: {{ news|length }}</h1>
+<h1>{% trans "Number of news per page" %}: {{ news|length }}</h1>
 
     {% if is_not_subscriber %}
-        <p class="text-center"><a href="{}" class="btn btn-secondary btn-sm">Подписаться</a></p>
+        <p class="text-center"><a href="{}" class="btn btn-secondary btn-sm">{% trans "Subscribe" %}</a></p>
     {% endif %}
 
 
     {% if perms.accounts.add_post %}
-    <a href="{% url 'post_create' %}">Добавить новость</a>
+    <a href="{% url 'post_create' %}">{% trans "Add post" %}</a>
     {% endif %}
 
 <hr>
     {% if news %}
         <table>
             <tr>
-                <td>Заголовок</td>
-                <td>Дата публикации</td>
-                <td>Текст</td>
+                <td>{% trans "Title" %}</td>
+                <td>{% trans "Publication date" %}</td>
+                <td>{% trans "Text" %}</td>
                 {% if perms.accounts.change_post or perms.accounts.delete_post %}
-                <td>Действия</td>
+                <td>{% trans "Actions" %}</td>
                 {% endif %}
 
             </tr>
@@ -39,10 +39,10 @@
 
                 <td>
                     {% if perms.accounts.change_post %}
-                    <a href="{% url 'post_edit' news_detail.id %}">Изменить</a>
+                    <a href="{% url 'post_edit' news_detail.id %}">{% trans "Edit" %}</a>
                     {% endif %}
                     {% if perms.accounts.delete_post %}
-                    <a href="{% url 'post_delete' news_detail.id %}">Удалить</a>
+                    <a href="{% url 'post_delete' news_detail.id %}">{% trans "Delete" %}</a>
                     {% endif %}
                 </td>
             </tr>
@@ -50,7 +50,7 @@
 
         </table>
     {% else %}
-        <h2>Новостей нет!</h2>
+        <h2>{% trans "No news" %}</h2>
     {% endif %}
 
    {% if page_obj.has_previous %}
